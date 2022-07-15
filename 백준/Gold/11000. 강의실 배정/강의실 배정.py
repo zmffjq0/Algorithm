@@ -1,20 +1,21 @@
 import sys
 import heapq
 
-heap = []
 input = sys.stdin.readline
-n = int(input())
-arr = []
-for i in range(n):
-  a, b = map(int, input().split())
-  arr.append([a, b])
-arr.sort(key=lambda x:x[0])
-heapq.heappush(heap, arr[0][1])
-for i in range(1, n):
-  if heap[0] > arr[i][0]:
-    heapq.heappush(heap, arr[i][1])
-  else:
-    heapq.heappop(heap)
-    heapq.heappush(heap, arr[i][1])
+
+N = int(input())
+lecture_list = [list(map(int, input().split())) for _ in range(N)]
+
+lecture_list.sort(key=lambda x:x[0])
+heap = []
+heapq.heappush(heap, lecture_list[0][1])
+
+for i in range(1, N):
+    if lecture_list[i][0] < heap[0]:
+        heapq.heappush(heap, lecture_list[i][1])
+    else:
+        heapq.heappop(heap)
+        heapq.heappush(heap, lecture_list[i][1])
+
 
 print(len(heap))
